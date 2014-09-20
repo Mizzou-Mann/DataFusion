@@ -1,0 +1,104 @@
+% assignment_3.text - Assignment 3 for Data Fusion class (Fall 2014)
+% Chanmann Lim - September 2014
+
+\documentclass[a4paper]{article}
+
+\usepackage[margin=1 in]{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+
+\everymath{\displaystyle}
+
+\begin{document}
+\title{CS 8790: Solution to assignment 3}
+\author{Chanmann Lim}
+\date{September 24, 2014}
+\maketitle
+
+\subsection*{Report:} ~\\
+\indent Accessing the calibration of the IDEK's new 3D sensor requires the studies of the expected value and covariance matrix of 
+the given 100k measurement in comparison to the ground truth and the error covariance matrix given by 
+the engineers designing the hardware. \\
+\begin{align*}
+Ground \; truth = [12.9 \quad 130.4 \quad 23.5]
+\end{align*}
+\begin{align*}
+	Error \; covariance \; matrix (R_{True}) = 
+	\begin{bmatrix}
+		1 & 1 & 1 \\ 
+		1 & 2 & 2 \\
+		1 & 2 & 3
+	\end{bmatrix}
+\end{align*}
+
+In this case, the computed expected value of the measurement is $[12.895992 \quad 130.398454 \quad 23.494780]$ which will 
+round up to the ground truth. Thus, the sensor is properly calibrated and unbiased. Next, calculating the covariance matrix 
+of the measurement which is the expected square error matrix \\
+\begin{align*}
+R &=
+\frac{1}{n}\sum_{i=1}^{n}
+	\begin{bmatrix}
+		\widetilde{x_i} \\ 
+		\widetilde{y_i} \\
+		\widetilde{z_i}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\widetilde{x_i} & \widetilde{y_i} & \widetilde{z_i} 
+	\end{bmatrix} \\
+R &=
+	\begin{bmatrix}
+		0.9974  &  0.9991  &  1.0001 \\
+    	0.9991  &  2.0037  &  2.0084 \\
+    	1.0001  &  2.0084  &  3.0114
+	\end{bmatrix}
+\end{align*}
+
+Finally, the expected covariance matrix must be conservative in other words it must be smaller than or equal to the 
+true covariance matrix given above.
+\begin{align*}
+\boxed{Eig(R_{True} - R) >= 0}
+\end{align*}
+\begin{align*}
+Eig(R_{True} - R) = Eig\left(
+	\begin{bmatrix}
+		1 & 1 & 1 \\ 
+		1 & 2 & 2 \\
+		1 & 2 & 3
+	\end{bmatrix}
+	-
+	\begin{bmatrix}
+		0.9974  &  0.9991  &  1.0001 \\
+    	0.9991  &  2.0037  &  2.0084 \\
+    	1.0001  &  2.0084  &  3.0114
+	\end{bmatrix}
+\right)
+\end{align*}
+\begin{align*}
+Eig(R_{True} - R) =
+	\begin{bmatrix}
+		-0.016873 \\
+		0.001233 \\
+		0.003055		
+	\end{bmatrix}
+\end{align*}
+
+However, the eigenvalues of the $(R_{True} - R)$ turns out to contain one negative value $-0.016873$ 
+which indicates that the given covariance matrix is not accurate.
+
+\subsection*{Code result:}
+\begin{align*}
+	Expected \; value &= 
+	\begin{bmatrix}
+		12.895992 & 130.398454 & 23.494780
+	\end{bmatrix} \\
+	Eigenvalues &= 
+	\begin{bmatrix}
+		-0.016873 & 0.001233 & 0.003055
+	\end{bmatrix}
+\end{align*}
+
+\newpage
+\subsection*{Appendix:}
+\lstinputlisting[language=Matlab, title=\lstname, basicstyle=\footnotesize]{assignment_3.m}
+
+\end{document}
