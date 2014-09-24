@@ -17,7 +17,7 @@
 
 \subsection*{Report:} ~\\
 \indent Accessing the calibration of the IDEK's new 3D sensor requires the studies of the expected value and covariance matrix of 
-the given 100k measurement in comparison to the ground truth and the error covariance matrix given by 
+the given 100k measurements in comparison to the ground truth and the error covariance matrix given by
 the engineers designing the hardware. \\
 \begin{align*}
 Ground \; truth = [12.9 \quad 130.4 \quad 23.5]
@@ -31,19 +31,19 @@ Ground \; truth = [12.9 \quad 130.4 \quad 23.5]
 	\end{bmatrix}
 \end{align*}
 
-In this case, the computed expected value of the measurement is $[12.895992 \quad 130.398454 \quad 23.494780]$ which will 
+In this case, the computed expected value of the measurements is $[12.895992 \quad 130.398454 \quad 23.494780]$ which will
 round up to the ground truth. Thus, the sensor is properly calibrated and unbiased. Next, calculating the covariance matrix 
-of the measurement which is the expected square error matrix \\
+of the measurements which is the expected square error matrix \\
 \begin{align*}
 R &=
-\frac{1}{n}\sum_{i=1}^{n}
+\frac{1}{n-1}\sum_{i=1}^{n}
 	\begin{bmatrix}
-		\widetilde{x_i} \\ 
-		\widetilde{y_i} \\
-		\widetilde{z_i}
+		\bar{x_i} \\
+		\bar{y_i} \\
+		\bar{z_i}
 	\end{bmatrix}
 	\begin{bmatrix}
-		\widetilde{x_i} & \widetilde{y_i} & \widetilde{z_i} 
+		\bar{x_i} & \bar{y_i} & \bar{z_i}
 	\end{bmatrix} \\
 R &=
 	\begin{bmatrix}

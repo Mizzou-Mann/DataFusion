@@ -9,7 +9,7 @@ fclose(fid);
 expected_value = mean(measurement_data, 2);
 % % use ones() to generate the consistent dimensions for matrix subtraction
 measurement_error = measurement_data - expected_value * ones(1, data_size);
-% % the sum of many square matrice M * M' = [M list] * [M list]'
+% % the sum of many n by 1 matrice M * M' = [M list] * [M list]'
 measurement_covariance = measurement_error * measurement_error' / (data_size - 1);
 
 % verify covariance
