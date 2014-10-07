@@ -19,36 +19,36 @@ P = R;
 plot_size = 100;
 innovation = zeros(plot_size, 9);
 distance = zeros(plot_size, 2);
-% for i=2:data_size
-%     S = R + P;
-%     W = P / S;
-%     P = P - W * S * W';
-%     deviation = measurement_data(:, i) - x;
-%     x = x + W * (deviation);
-%     if i - 1 <= plot_size
-%         % innovation
-%         variance = sqrt(diag(S));
-%         innovation(i - 1, :) = [deviation' variance' (variance * -1)'];
-%         % distance
-%         distance(i - 1, 1) = sqrt(sum((x - ground_truth).^2)); % euclidean distance
-%         distance(i - 1, 2) = sum(eig(P)); % sum of eiganvalues of P
-%     end
-% end
+for i=2:data_size
+    S = R + P;
+    W = P / S;
+    P = P - W * S * W';
+    deviation = measurement_data(:, i) - x;
+    x = x + W * (deviation);
+    if i - 1 <= plot_size
+        % innovation
+        variance = sqrt(diag(S));
+        innovation(i - 1, :) = [deviation' variance' (variance * -1)'];
+        % distance
+        distance(i - 1, 1) = sqrt(sum((x - ground_truth).^2)); % euclidean distance
+        distance(i - 1, 2) = sum(eig(P)); % sum of eiganvalues of P
+    end
+end
 
-% figure
-% plot(innovation(:, [1 4 7]))
-% title('Innovation in x (blue) vs. +/- square roots of their innovation variances')
-% 
-% figure
-% plot(innovation(:, [2 5 8]))
-% title('Innovation in y (blue) vs. +/- square roots of their innovation variances')
-% 
-% figure
-% plot(innovation(:, [3 6 9]))
-% title('Innovation in z (blue) vs. +/- square roots of their innovation variances')
-% 
-% figure
-% plot(distance)
-% title('Distance between estimated position and ground truth (blue) vs. expected distance (green)')
+figure
+plot(innovation(:, [1 4 7]))
+title('Innovation in x (blue) vs. +/- square roots of their innovation variances')
+
+figure
+plot(innovation(:, [2 5 8]))
+title('Innovation in y (blue) vs. +/- square roots of their innovation variances')
+
+figure
+plot(innovation(:, [3 6 9]))
+title('Innovation in z (blue) vs. +/- square roots of their innovation variances')
+
+figure
+plot(distance)
+title('Distance between estimated position and ground truth (blue) vs. expected distance (green)')
 
 
