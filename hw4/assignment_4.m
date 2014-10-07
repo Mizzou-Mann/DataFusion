@@ -55,5 +55,3 @@ title('Innovation in z (blue) vs. +/- square roots of their innovation variances
 figure
 plot(distance)
 title('Distance between estimated position and ground truth (blue) vs. expected distance (green)')
-
-
