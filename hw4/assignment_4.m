@@ -9,7 +9,7 @@ ground_truth = [12.9; 130.4; 23.5];
 % first observation (z, R)
 z = measurement_data(:, 1);
 R = [1 1 1; 1 2 2; 1 2 3];
-fprintf('First observation mean z = [%f\t %f\t %f]\n', z);
+fprintf('First observation mean z =\n%14f %14f %14f\n', z);
 fprintf('The square root of covariance matrix R =\n');
 fprintf('%14f %14f %14f\n', sqrtm(R));
 
@@ -34,6 +34,11 @@ for i=2:data_size
         distance(i - 1, 2) = sum(eig(P)); % sum of eiganvalues of P
     end
 end
+
+% final estimate (x, P)
+fprintf('Final mean x =\n%14f %14f %14f\n', x);
+fprintf('The square root of final covariance P =\n');
+fprintf('%14f %14f %14f\n', sqrtm(P));
 
 figure
 plot(innovation(:, [1 4 7]))
