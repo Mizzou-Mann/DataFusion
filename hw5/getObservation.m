@@ -1,4 +1,5 @@
 function [ z, R, H ] = getObservation( fid )
+% function [ d ] = getObservation( fid )
 %getObservation - read observation from data file
 %   Read a single observation from file
 %       - dimension: {1 or 2}
