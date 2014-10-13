@@ -31,7 +31,7 @@ for i=2:data_size
         innovation(i - 1, :) = [deviation' variance' (variance * -1)'];
         % distance
         distance(i - 1, 1) = sqrt(sum((x - ground_truth).^2)); % euclidean distance
-        distance(i - 1, 2) = sum(eig(P)); % sum of eiganvalues of P
+        distance(i - 1, 2) = sqrt(sum(eig(P))); % square root of sum of eiganvalues of P
     end
 end
 
