@@ -1,7 +1,7 @@
 % initialize filter
 x = [0; 0; 0];
 P = diag(ones(1,3) * 10^8); % large covariance P
-normalized_innovation = [];
+normalized_innovations = [];
 
 % open data file
 fid = fopen('A5-MeasurementData.txt');
@@ -12,7 +12,7 @@ while ~feof(fid)
         row = row + 1;
         [z, R, H] = getObservation(fid, d);
         [x, P, v] = update(x, P, z, R, H);
-        normalized_innovation(row, 1) = v(1);
+        normalized_innovations(row, 1) = v(1);
     end
 end
 % close file
@@ -25,8 +25,8 @@ fprintf('%14f %14f %14f\n', P);
 
 % plots
 figure
-plot(normalized_innovation)
-title('Normalized innovation vector')
+plot(normalized_innovations)
+title('Normalized innovations')
 
 figure
 plot(randn(row, 1))
