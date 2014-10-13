@@ -1,13 +1,8 @@
-function [ z, R, H ] = getObservation( fid )
-% function [ d ] = getObservation( fid )
+function [ z, R, H ] = getObservation( fid, d )
 %getObservation - read observation from data file
-%   Read a single observation from file
-%       - dimension: {1 or 2}
-%       - mean: floats
-%       - covariance: floats
-%       - transformation: floats
+%   fid - file pointer
+%   d   - dimension of the observation
 
-    d = fscanf(fid, '%d', 1);
     if (d == 1)
         observation = fscanf(fid, '%f', 5);
         z = observation(1);

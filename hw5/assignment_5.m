@@ -7,10 +7,13 @@ normalized_innovation = [];
 fid = fopen('A5-MeasurementData.txt');
 row = 0;
 while ~feof(fid)
-    row = row + 1;
-    [z, R, H] = getObservation(fid);
-    [x, P, v] = update(x, P, z, R, H);
-    normalized_innovation(row) = v(1);
+    d = fscanf(fid, '%d', 1);
+    if ~isempty(d)
+        row = row + 1;
+        [z, R, H] = getObservation(fid, d);
+        [x, P, v] = update(x, P, z, R, H);
+        normalized_innovation(row, 1) = v(1);
+    end
 end
 % close file
 fclose(fid);
@@ -23,7 +26,7 @@ fprintf('%14f %14f %14f\n', P);
 % plots
 figure
 plot(normalized_innovation)
-title('Normalized innovation')
+title('Normalized innovation vector')
 
 figure
 plot(randn(row, 1))
