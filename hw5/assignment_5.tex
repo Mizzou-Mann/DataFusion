@@ -17,7 +17,7 @@
 \maketitle
 
 \subsection*{Report:} ~\\
-\indent The sensor's state is a 3D measurement of the position of the target however the observations are obtained in lower dimensions (1D and 2D) with respective transformation matrix $H$. \\
+\indent The measurement state is a 3D estimate of the position of the target however the observations are obtained in lower dimensions (1D and 2D) with respective transformation matrix $H$. \\
 \\
 \indent The provided data come with a mixture of those 1D and 2D observations with the dimensionality value encoded at the beginning of each measurement. Thus, reading the dimension value(integer) is crucial to determine the numbers of subsequence data(floats) to be extracted to get a single observation. In the case that the observation is one dimensional the number of float values to read is $1+1+1\times3=5$, one value for mean $z$, one for covariance $R$ and $1\times3$ for the transformation matrix $H$. For 2 dimensional observation, the number of values to read from the data file is $2+3+2\times3=11$, two for the mean, three for the covariance and $2\times3$ for the transformation matrix.\\
 \\
@@ -51,7 +51,7 @@ v = S^{-\frac{1}{2}}(z-Hx)
 \paragraph{2. } The plot of Randn with the same number of values as the above normalized innovations plot:\\
 \includegraphics[scale=.75]{randn.png}\\
 
-\paragraph{3. } The final mean $x$ and the new covariance $P$ are
+\paragraph{3. } The final mean $x$ and covariance $P$ are
 \begin{align*}
 x_{final} = 
 	\begin{bmatrix}
