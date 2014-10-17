@@ -1,7 +1,8 @@
 % initialize filter
-x = [0; 0; 0];
+x = zeros(3,1);
 P = diag(ones(1,3) * 10^8); % large covariance P
 normalized_innovations = [];
+innovation_size = [];
 
 % open data file
 fid = fopen('A5-MeasurementData.txt');
@@ -12,6 +13,8 @@ while ~feof(fid)
         row = row + 1;
         [z, R, H] = getObservation(fid, d);
         [x, P, v] = update(x, P, z, R, H);
+        innovation_size(row, 1) = length(R);
+        innovation_size(row, 2) = v'*v;
         normalized_innovations(row, 1) = v(1);
     end
 end
