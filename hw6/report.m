@@ -15,15 +15,19 @@ classdef report
             obj.innovation_sizes = [];
         end
         
+        function obj = add_rover_path_data(obj, x)
+        % x - mean estimate
+            obj.rover_path(:,end + 1) = x;
+        end
+        
         function obj = add_data(obj, v, x)
         % v - normalized innovation vector
-        % x - mean
+        % x - mean estimate
             obj.normalized_innovations(end + 1) = v(1);
-            obj.rover_path(:,end + 1) = x;
             obj.innovation_sizes(end + 1) = v'*v / length(x);
         end
         
-        function obj = add_rover_trace(obj, P)
+        function obj = add_rover_trace_data(obj, P)
         % P - covariance
             obj.traces(end + 1) = sqrt(sum(diag(P)));
         end
@@ -37,7 +41,7 @@ classdef report
             % plot: traces
             figure
             plot(obj.traces)
-            title('Square root of the trace of rover covariance')
+            title('Square root of the trace of the rover covariance')
             
             % plot: rover path
             figure
@@ -46,9 +50,9 @@ classdef report
         end
         
         function print_innovation_size_percentage(obj)
-            template = 'Innovation sizes that are less than 1 = %.2f%%\n';
-            average = sum(obj.innovation_sizes < 1) / length(obj.innovation_sizes);
-            fprintf(template, average * 100);
+            template = 'The observations with innovation size less than 1 = %.2f%%\n';
+            percent = sum(obj.innovation_sizes < 1) / length(obj.innovation_sizes);
+            fprintf(template, percent * 100);
         end
     end
 end
