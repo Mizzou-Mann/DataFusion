@@ -20,11 +20,11 @@ classdef report
             obj.rover_path(:,end + 1) = x;
         end
         
-        function obj = add_data(obj, v, x)
+        function obj = add_data(obj, v)
         % v - normalized innovation vector
         % x - mean estimate
             obj.normalized_innovations(end + 1) = v(1);
-            obj.innovation_sizes(end + 1) = v'*v / length(x);
+            obj.innovation_sizes(end + 1) = v'*v / length(v); % n - the dimension of innovation
         end
         
         function obj = add_rover_trace_data(obj, P)

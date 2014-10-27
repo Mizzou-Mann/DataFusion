@@ -16,7 +16,7 @@ while ~feof(fid)
         else
             [z, R, H] = get_observation(data);
             [x, P, v] = update(x, P, z, R, H);
-            result = result.add_data(v, x);
+            result = result.add_data(v);
         end
         result = result.add_rover_trace_data(P);
     end
