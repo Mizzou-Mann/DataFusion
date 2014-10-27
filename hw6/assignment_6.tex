@@ -20,6 +20,9 @@
 \indent Suppose we have a rover deployed in a remote 2D environment and we would like to move the rover to a targeted position (in the 2D environment) by sending control input commanding the rover to move some distances relative to its current position. However various levels of uncertainties (in the remote environment or in some errors in the design of the rover) might affect the prediction of the location of the rover as it is traversing and to re-adjust our estimate we have the sensor that can observe the rover and provides independent and consistent (unbiased and conservative covariance) observation of its current position then we go through control input and observation loop until the rover reaches the desired location. \\
 \\
 \indent In maintaining the estimate of the state of the rover, the control inputs and the observations have to be treated differently. When the control input is sent the best estimate of the new location of the rover is just the sum of the rover's current position and the relative changes in position moreover the covariance of the two measurements also get added together. \\
+\\
+\textbf{Note: } The data file provides the square root of the covariance hence to get the covariance R for control input or observation we need to square it and $R = R * R^{T}$.
+
 \begin{align*}
 x_{new} &= x + z \\
 P_{new} &= P + R \\
@@ -51,26 +54,26 @@ and the following is the plot of the square root of the trace of the rover covar
 The rover moved a few fairly large distances at the beginning then started taking many granular steps to an exact target on the upper-right corner of the above plot and zooming in to the location will reveal the rover's maneuvers. \\
 \includegraphics[scale=.75]{rover_path_zoom_in.png} \\
 
-\paragraph{4. } The observations with innovation size less than 1 is 61.33\%.
-
-\paragraph{5. } The rover's final estimated position is [495.868838, 628.111014] and the standard deviation can be obtained by taking the square root of diagonal elements of the covariance $P$ of the final position.\\
+\paragraph{4. } The observations with innovation size less than 1 is 64.67\%.
+   
+\paragraph{5. } The rover's final estimated position is [496.001211, 628.004994] and the standard deviation can be obtained by taking the square root of diagonal elements of the covariance $P$ of the final position.\\
 \begin{align*}
 	x_{final} &=
 	\begin{bmatrix}
-		495.868838 \\
-    	628.111014
+		496.001211 \\
+    	628.004994
 	\end{bmatrix} \\
 	standard\_deviation &=
 	\begin{bmatrix}
-		0.216657 \\
-    	0.216158
+		0.158488 \\
+    	0.157854
 	\end{bmatrix}
 \end{align*}
 \begin{align*}
 	final\_estimate =
 	\begin{pmatrix}
-		495.868838 & 0.216657 \\
-    	628.111014 & 0.216158
+		496.001211 & 0.158488 \\
+    	628.004994 & 0.157854
 	\end{pmatrix}
 \end{align*}
 
