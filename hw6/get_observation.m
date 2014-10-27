@@ -12,5 +12,6 @@ function [ z, R, H ] = get_observation( data )
         R = [data(4:5)'; data(5:6)'];
         H = [data(7:8)'; data(9:10)'];
     end
+    R = R * R'; % R from data is just the square root of observation covariance
 end
 
