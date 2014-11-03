@@ -17,7 +17,7 @@ while ~feof(fid)
         [t_new, z, R] = get_observation(data);
         [t, x, P] = predict(t, x, P, t_new);
         [x, P, v] = update(x, P, z, R);
-        normalized_innovations(end + 1) = 0;
+        normalized_innovations(:, end + 1) = v;
     end
 end
 % close file
@@ -36,3 +36,12 @@ fprintf('\nThe prediction of the state of the target one hour after the final ob
 [~, x_new, P_new] = predict(t, x, P, t + 3600);
 disp('x(t+3600) = '); fprintf('%14f \n', x_new);
 disp('P(t+3600) = '); fprintf('%14.8f %14.8f %14.8f %14.8f \n', P_new);
+
+% plot normalized unit innovations
+figure
+plot(normalized_innovations(1,:))
+title('Normalized x innovations')
+
+figure
+plot(normalized_innovations(2,:))
+title('Normalized y innovations')
