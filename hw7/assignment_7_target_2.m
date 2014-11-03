@@ -2,6 +2,7 @@
 t = 0;
 x = zeros(4,1);
 P = diag(ones(1,4) * 10^8); % large covariance P
+q = 0;
 result = report();
 
 % open data file
@@ -12,7 +13,7 @@ while ~feof(fid)
     
     if ~isempty(data)
         [t_new, z, R] = get_observation(data);
-        [t, x, P] = predict(t, x, P, t_new);
+        [t, x, P] = predict(t, x, P, t_new, q);
         [x, P, vx, vs] = update(x, P, z, R);
         result = result.add_data(vx, vs);
     end
@@ -23,6 +24,6 @@ fclose(fid);
 result = result.update_estimate(t, x, P);
 
 result.print_final_estimate();
-result.print_prediction(t + 3600);
+result.print_prediction(t + 3600, q);
 result.plot();
 result.print_innovation_sizes_percentage();

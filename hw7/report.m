@@ -27,8 +27,8 @@ classdef report
             obj.P = P;
         end
         
-        function print_prediction(obj, t)
-            [~, x_new, P_new] = predict(obj.t, obj.x, obj.P, t);
+        function print_prediction(obj, t, q)
+            [~, x_new, P_new] = predict(obj.t, obj.x, obj.P, t, q);
             fprintf('x(%f) = \n', t);
             fprintf('%14f \n', x_new);
             fprintf('P(%f) = \n', t);
@@ -48,10 +48,12 @@ classdef report
         function plot(obj)
             figure
             plot(obj.normalized_unit_innovations(1,:))
+            ylim([-3, 3])
             title('Normalized x innovations')
 
             figure
             plot(obj.normalized_unit_innovations(2,:))
+            ylim([-3, 3])
             title('Normalized y innovations')
         end
         
