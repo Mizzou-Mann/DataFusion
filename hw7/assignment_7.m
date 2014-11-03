@@ -3,6 +3,7 @@ t = 0;
 x = zeros(4,1);
 P = diag(ones(1,4) * 10^8); % large covariance P
 normalized_innovations = [];
+innovation_sizes = [];
 
 % open data file
 fid = fopen('Target1.txt');
@@ -16,8 +17,9 @@ while ~feof(fid)
     if ~isempty(data)
         [t_new, z, R] = get_observation(data);
         [t, x, P] = predict(t, x, P, t_new);
-        [x, P, v] = update(x, P, z, R);
-        normalized_innovations(:, end + 1) = v;
+        [x, P, vx, vs] = update(x, P, z, R);
+        normalized_innovations(:, end+1) = vx;
+        innovation_sizes(end+1) = vs;
     end
 end
 % close file
@@ -45,3 +47,8 @@ title('Normalized x innovations')
 figure
 plot(normalized_innovations(2,:))
 title('Normalized y innovations')
+
+% print percentage of the innovation sizes less than or equal to 1
+template = 'Percentage of the innovation sizes less than or equal to 1 = %.2f%%\n';
+percent = sum(innovation_sizes <= 1)/length(innovation_sizes);
+fprintf(template, percent * 100);
