@@ -14,10 +14,10 @@ while ~feof(fid)
     data = sscanf(tline, '%f');
     
     if ~isempty(data)
-        [tz, z, R] = get_observation(data);
-        [t, x, P] = transform(t, x, P, tz);
+        [t_new, z, R] = get_observation(data);
+        [t, x, P] = predict(t, x, P, t_new);
         [x, P, v] = update(x, P, z, R);
-        normalized_innovations(end) = 0;
+        normalized_innovations(end + 1) = 0;
     end
 end
 % close file
@@ -33,6 +33,6 @@ disp('P_final = '); fprintf('%14.8f %14.8f %14.8f %14.8f \n', P);
 
 % prediction of the state
 fprintf('\nThe prediction of the state of the target one hour after the final observation:\n');
-[t_new, x_new, P_new] = transform(t, x, P, t + 3600);
-disp('x_new = '); fprintf('%14f \n', x_new);
-disp('P_new = '); fprintf('%14.8f %14.8f %14.8f %14.8f \n', P_new);
+[~, x_new, P_new] = predict(t, x, P, t + 3600);
+disp('x(t+3600) = '); fprintf('%14f \n', x_new);
+disp('P(t+3600) = '); fprintf('%14.8f %14.8f %14.8f %14.8f \n', P_new);

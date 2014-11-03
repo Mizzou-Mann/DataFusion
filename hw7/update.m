@@ -8,7 +8,7 @@ function [ x, P, v ] = update( x, P, z, R )
     P = P - (W * S * W');
     innovation = (z - H * x);
     x = x + W * innovation;
-    v = innovation ./ sqrt(S([1 4]));
+    v = innovation ./ sqrt(S([1;4]));
 %     v = sqrtm(S) \ innovation
 %     v_x = innovation(1) / sqrt(S(1,1))
 end
