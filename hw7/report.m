@@ -14,13 +14,11 @@ classdef report
             obj.running_percentage = [];
         end
         
-        function obj = add_data(obj, vx, vs)
+        function obj = add_data(obj, vx)
         % vx - normalized unit innovation vector
         % vs - innovation size
             obj.normalized_unit_innovations(:, end + 1) = vx;
             obj.running_percentage(:, end + 1) = sum(obj.normalized_unit_innovations < 0, 2) / length(obj.normalized_unit_innovations);
-%             obj.innovation_sizes(end + 1) = vs;
-%             obj.innovation_sizes_running_percentage(end + 1) = sum(obj.innovation_sizes <= 1) / length(obj.innovation_sizes);
         end
         
         function obj = update_estimate(obj, t, x, P)

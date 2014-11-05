@@ -14,8 +14,8 @@ while ~feof(fid)
     if ~isempty(data)
         [t_new, z, R] = get_observation(data);
         [t, x, P] = predict(t, x, P, t_new, q);
-        [x, P, vx, vs] = update(x, P, z, R);
-        result = result.add_data(vx, vs);
+        [x, P, vx] = update(x, P, z, R);
+        result = result.add_data(vx);
     end
 end
 % close file

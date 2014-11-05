@@ -1,11 +1,10 @@
-function [ x, P, vx, vs ] = update( x, P, z, R )
+function [ x, P, vx ] = update( x, P, z, R )
 %UPDATE - update sensor estimate
 %   incorporate information from new observation (z, R)
 %   returns
 %       x  - updated mean x
 %       P  - updated covariance P
 %       vx - normalized unit innovations
-%       vs - normalized innovation size
     
 
     % Use dimensionality transformation matrix H
@@ -19,7 +18,5 @@ function [ x, P, vx, vs ] = update( x, P, z, R )
     innovation = (z - H * x);
     x = x + W * innovation;
 
-    v = sqrtm(S) \ innovation;
     vx = innovation ./ sqrt(S([1;4]));
-    vs = (v'*v) / length(v);
 end
