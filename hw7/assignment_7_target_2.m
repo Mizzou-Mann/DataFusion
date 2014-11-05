@@ -2,7 +2,7 @@
 t = 0;
 x = zeros(4,1);
 P = eye(4) * 10^8; % large covariance P
-q = 1;% 0; %0.15;
+q = 0.15; % 1;
 result = report();
 
 % open data file
