@@ -24,6 +24,6 @@ fclose(fid);
 result = result.update_estimate(t, x, P);
 
 % result.print_final_estimate();
-% result.print_prediction(t + 3600, q);
+result.print_prediction(t + 3600, q);
 % result.plot();
-result.display_innovation_sizes_percentage();
+result.print_innovation_sizes_percentage();

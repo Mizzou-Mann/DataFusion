@@ -2,8 +2,7 @@ classdef report
 
     properties
         normalized_unit_innovations;
-        innovation_sizes;
-        innovation_sizes_running_percentage;
+        running_percentage;
         t;
         x;
         P;
@@ -12,16 +11,16 @@ classdef report
     methods
         function obj = report()
             obj.normalized_unit_innovations = [];
-            obj.innovation_sizes = [];
-            obj.innovation_sizes_running_percentage = [];
+            obj.running_percentage = [];
         end
         
         function obj = add_data(obj, vx, vs)
         % vx - normalized unit innovation vector
         % vs - innovation size
             obj.normalized_unit_innovations(:, end + 1) = vx;
-            obj.innovation_sizes(end + 1) = vs;
-            obj.innovation_sizes_running_percentage(end + 1) = sum(obj.innovation_sizes <= 1) / length(obj.innovation_sizes);
+            obj.running_percentage(:, end + 1) = sum(obj.normalized_unit_innovations < 0, 2) / length(obj.normalized_unit_innovations);
+%             obj.innovation_sizes(end + 1) = vs;
+%             obj.innovation_sizes_running_percentage(end + 1) = sum(obj.innovation_sizes <= 1) / length(obj.innovation_sizes);
         end
         
         function obj = update_estimate(obj, t, x, P)
@@ -49,25 +48,31 @@ classdef report
         end
         
         function plot(obj)
+            % plot x innovations
             figure;
             plot(obj.normalized_unit_innovations(1,:));
             ylim([-3, 3]);
             title('Normalized x innovations');
 
             figure;
+            plot(obj.running_percentage(1, :));
+            title('Running percentage of the x innovation that are less than or equal to 0');
+
+            % plot y innovations
+            figure;
             plot(obj.normalized_unit_innovations(2,:));
             ylim([-3, 3]);
             title('Normalized y innovations');
+
+            figure;
+            plot(obj.running_percentage(2, :));
+            title('Running percentage of the y innovation that are less than or equal to 0');
         end
         
-        function display_innovation_sizes_percentage(obj)
-            template = 'Percentage of the innovation sizes less than or equal to 1 = %.2f%%\n';
-            percent = sum(obj.innovation_sizes <= 1) / length(obj.innovation_sizes);
+        function print_innovation_sizes_percentage(obj)
+            template = 'Percentage of the innovations that are less than 0 = [ %.2f%%, %.2f%% ]\n';
+            percent = sum(obj.normalized_unit_innovations < 0, 2) / length(obj.normalized_unit_innovations);
             fprintf(template, percent * 100);
-            % plot running percentage
-            figure;
-            plot(obj.innovation_sizes_running_percentage);
-            title('Running percentage of the innovation sizes that are less than or equal to 1');
         end
     end
 end

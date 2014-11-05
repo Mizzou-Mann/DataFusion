@@ -1,7 +1,7 @@
 function [ x, P, vx, vs ] = update( x, P, z, R )
 %UPDATE - update sensor estimate
 %   incorporate information from new observation (z, R)
-%   return
+%   returns
 %       x  - updated mean x
 %       P  - updated covariance P
 %       vx - normalized unit innovations
@@ -11,7 +11,7 @@ function [ x, P, vx, vs ] = update( x, P, z, R )
     % Use dimensionality transformation matrix H
     %   to project down the state dimension
     %   since the observation doesn't come with velocity
-    H = [1 0 0 0; 0 1 0 0];
+    H = eye(2, 4);
 
     S = (H * P * H') + R;
     W = (P * H') / S;
