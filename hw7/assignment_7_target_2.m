@@ -1,8 +1,8 @@
 % initialize filter
 t = 0;
 x = zeros(4,1);
-P = diag(ones(1,4) * 10^8); % large covariance P
-q = 0;
+P = eye(4) * 10^8; % large covariance P
+q = 0; %0.15;
 result = report();
 
 % open data file
@@ -23,7 +23,7 @@ fclose(fid);
 
 result = result.update_estimate(t, x, P);
 
-result.print_final_estimate();
-result.print_prediction(t + 3600, q);
-result.plot();
-result.print_innovation_sizes_percentage();
+% result.print_final_estimate();
+% result.print_prediction(t + 3600, q);
+% result.plot();
+result.display_innovation_sizes_percentage();

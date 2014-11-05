@@ -3,6 +3,7 @@ classdef report
     properties
         normalized_unit_innovations;
         innovation_sizes;
+        innovation_sizes_running_percentage;
         t;
         x;
         P;
@@ -12,6 +13,7 @@ classdef report
         function obj = report()
             obj.normalized_unit_innovations = [];
             obj.innovation_sizes = [];
+            obj.innovation_sizes_running_percentage = [];
         end
         
         function obj = add_data(obj, vx, vs)
@@ -19,6 +21,7 @@ classdef report
         % vs - innovation size
             obj.normalized_unit_innovations(:, end + 1) = vx;
             obj.innovation_sizes(end + 1) = vs;
+            obj.innovation_sizes_running_percentage(end + 1) = sum(obj.innovation_sizes <= 1) / length(obj.innovation_sizes);
         end
         
         function obj = update_estimate(obj, t, x, P)
@@ -46,21 +49,25 @@ classdef report
         end
         
         function plot(obj)
-            figure
-            plot(obj.normalized_unit_innovations(1,:))
-            ylim([-3, 3])
-            title('Normalized x innovations')
+            figure;
+            plot(obj.normalized_unit_innovations(1,:));
+            ylim([-3, 3]);
+            title('Normalized x innovations');
 
-            figure
-            plot(obj.normalized_unit_innovations(2,:))
-            ylim([-3, 3])
-            title('Normalized y innovations')
+            figure;
+            plot(obj.normalized_unit_innovations(2,:));
+            ylim([-3, 3]);
+            title('Normalized y innovations');
         end
         
-        function print_innovation_sizes_percentage(obj)
+        function display_innovation_sizes_percentage(obj)
             template = 'Percentage of the innovation sizes less than or equal to 1 = %.2f%%\n';
             percent = sum(obj.innovation_sizes <= 1) / length(obj.innovation_sizes);
             fprintf(template, percent * 100);
+            % plot running percentage
+            figure;
+            plot(obj.innovation_sizes_running_percentage);
+            title('Running percentage of the innovation sizes that are less than or equal to 1');
         end
     end
 end
