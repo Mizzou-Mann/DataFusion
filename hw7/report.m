@@ -69,7 +69,7 @@ classdef report
             figure;
             plot(obj.running_percentages(1, :));
             ylim([.3, .7]);
-            title('Running percentage of the x innovation that are less than or equal to 0');
+            title('Running percentage of the x innovations that are less than or equal to 0');
 
             % plot y innovations
             figure;
@@ -80,12 +80,13 @@ classdef report
             figure;
             plot(obj.running_percentages(2, :));
             ylim([.3, .7]);
-            title('Running percentage of the y innovation that are less than or equal to 0');
+            title('Running percentage of the y innovations that are less than or equal to 0');
         end
         
-        function print_innovation_sizes_percentage(obj)
+        function print_innovations_percentage(obj)
             template = 'Percentage of the innovations that are less than 0 = [ %.2f%%, %.2f%% ]\n';
-            percent = sum(obj.normalized_unit_innovations < 0, 2) / length(obj.normalized_unit_innovations);
+            percent = ...
+                sum(obj.normalized_unit_innovations < 0, 2) / length(obj.normalized_unit_innovations);
             fprintf(template, percent * 100);
         end
     end
