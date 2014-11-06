@@ -23,6 +23,8 @@ function filter_7 (data_file, q)
 
     result = result.update_estimate(t, x, P);
 
+    fprintf('Result for ''%s'' with q = %.3f \n----------------------\n\n', ...
+        data_file, q);
     result.print_final_estimate();
     result.print_prediction(t + 3600, q);
     result.plot();
