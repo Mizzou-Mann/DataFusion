@@ -19,7 +19,8 @@ classdef report
         % vs - innovation size
             obj.normalized_unit_innovations(:, end + 1) = vx;
             obj.running_percentages(:, end + 1) = ...
-                sum(obj.normalized_unit_innovations < 0, 2) / length(obj.normalized_unit_innovations);
+                sum(obj.normalized_unit_innovations < 0, 2) ...
+                / length(obj.normalized_unit_innovations);
         end
         
         function obj = update_estimate(obj, t, x, P)
@@ -85,8 +86,8 @@ classdef report
         
         function print_innovations_percentage(obj)
             template = 'Percentage of the innovations that are less than 0 = [ %.2f%%, %.2f%% ]\n';
-            percent = ...
-                sum(obj.normalized_unit_innovations < 0, 2) / length(obj.normalized_unit_innovations);
+            percent = sum(obj.normalized_unit_innovations < 0, 2) ... 
+                / length(obj.normalized_unit_innovations);
             fprintf(template, percent * 100);
         end
     end
